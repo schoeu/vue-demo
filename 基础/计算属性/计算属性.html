@@ -14,6 +14,12 @@
     <!-- 计算缓存 vs Methods -->
     <p>Method reversed message: "{{ reversedMessageFn() }}"</p>
 
+    <!-- computed属性 vs Watch属性 -->
+    <p>FullStr: "{{ fullStr }}"</p>
+
+    <!-- 计算setter -->
+    <p>Setter show: "{{ setterShow }}"</p>
+
 
 </div>
 <script>
@@ -21,11 +27,25 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'hellovue'
+            message: 'hellovue',
+            prefix: 'prefix'
         },
         computed: {
             reversedMessage: function () {
                 return this.message.split('').reverse().join('') + Date.now();
+            },
+            // watch多个属性的变化不如新建一个computed属性
+            fullStr: function () {
+                return this.prefix + this.message;
+            },
+            // 计算属性默认只有getter, 需要的时候可以添加setter
+            setterShow: {
+                get: function () {
+                    return this.prefix + this.message;
+                },
+                set: function (value) {
+                    this.message = value;
+                }
             }
         },
         // 计算属性是基于它们的依赖进行缓存的, 计算属性只有在它的相关依赖发生变化的会后才会重新求值,而方法则每次都是重新运行
