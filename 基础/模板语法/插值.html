@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 插值 -->
+    <p>Message: {{message}}</p>
+
+    <!-- 一次性插值 -->
+    <p v-once>This will never change: {{msg}}</p>
+
+    <!-- 纯html -->
+    <p v-html="htmlstr">This will never change: {{msg}}</p>
+
+    <!-- 属性 -->
+    <button v-bind:disabled="attr">button</button>
+
+    <!-- 使用JavaScript表达式 -->
+    <p v-bind:id="i > 0 ? 'up' : 'down'">javascript: {{i + 1}}</p>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            // 插值
+            message: '123',
+            // 一次性插值
+            msg: '456',
+            // 纯html
+            htmlstr: '<h1>title</h1>',
+            // 属性
+            attr: false,
+            // 使用JavaScript表达式, 只能包含单个表达式, 模板表达式放在一个沙盒中, 只能访问全局变量的一个白名单
+            i: 1
+        }
+    });
+</script>
+</body>
+</html>

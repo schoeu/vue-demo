@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 插值 -->
+    <a v-bind:href="url">链接</a>
+
+    <!-- 修饰符 -->
+    <form v-bind:submit.prevent="onSubmit" action="/test">
+        <input type="text" value="1" hidden>
+        <input type="submit" value="submit">
+    </form>
+
+    <!-- 过滤器 -->
+    <div v-bind:id="str | capitalize">{{message | capitalize | add(2)}}</div>
+
+    <!-- 缩写 -->
+    <p :id="str" @click="tap">{{message}}</p>
+</div>
+<script>
+    // 指令属性预期是单一的js表达式, 它的职责是当表达式的值改变时相应的将某些行为应用在DOM上。
+    var app = new Vue({
+        el: '#app',
+        data: {
+            url: 'http://www.baidu.com',
+            message: 'hellovue',
+            str: 'test'
+        },
+        methods: {
+            onSubmit: function () {
+                alert(this.url);
+            },
+            tap: function () {
+                alert('tap~');
+            }
+        },
+        // 过滤器只能在 mustache 绑定和 v-bind 表达式（从 2.1.0 开始支持）中使用, 复杂的数据变换应该使用计算属性
+        filters: {
+            capitalize: function (value) {
+                if (!value) {
+                    return '';
+                }
+                value = value.toString();
+                return value.charAt(0).toUpperCase() + value.slice(1);
+            },
+            add: function (value, length) {
+                length = length || 1;
+                return value + length;
+            }
+        }
+    });
+</script>
+</body>
+</html>

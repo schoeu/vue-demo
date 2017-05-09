@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="example">
+</div>
+<script>
+    var data = {
+        a: 1
+    };
+    var vm = new Vue({
+        el: '#example',
+        data: data,
+        created: function () {
+            console.log('created');
+        },
+        mounted: function () {
+            console.log('mounted');
+        },
+        updated: function () {
+            console.log('updated');
+        },
+        destroyed: function () {
+            console.log('destroyed');
+        }
+        // ...
+    });
+</script>
+</body>
+</html>
