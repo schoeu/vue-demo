@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/lodash.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 观察 Watchers -->
+    <input type="text" v-model="question">
+    <p>{{answer}}</p>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            answer: '',
+            question: ''
+        },
+        // 响应数据变化时,执行异步或者开销较大的操作时, watch比较合适。
+        watch: {
+            question: function (newValue) {
+                this.answer = 'Waiting for you to stop typing...';
+                this.getAnswer();
+            }
+        },
+        methods: {
+            getAnswer: _.debounce(function () {
+                this.answer = 'This is an answer.';
+            }, 1500)
+        }
+    });
+</script>
+</body>
+</html>
