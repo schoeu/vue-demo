@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 基础例子 -->
+    <p>Original message: "{{ message }}"</p>
+    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+
+    <!-- 计算缓存 vs Methods -->
+    <p>Method reversed message: "{{ reversedMessageFn() }}"</p>
+
+
+</div>
+<script>
+    // 模板内的表达式只用于简单计算, 复杂逻辑应当使用计算属性
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'hellovue'
+        },
+        computed: {
+            reversedMessage: function () {
+                return this.message.split('').reverse().join('') + Date.now();
+            }
+        },
+        // 计算属性是基于它们的依赖进行缓存的, 计算属性只有在它的相关依赖发生变化的会后才会重新求值,而方法则每次都是重新运行
+        methods: {
+            reversedMessageFn: function () {
+                return this.message.split('').reverse().join('') + Date.now();
+            }
+        }
+    });
+</script>
+</body>
+</html>
