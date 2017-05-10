@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- v-if -->
+    <p v-if="seen">v-if.</p>
+
+    <!-- v-else -->
+    <p v-if="seen">v-if.</p>
+    <p v-else>v-else.</p>
+
+    <!-- template -->
+    <template v-if="ok">
+        <h1>title</h1>
+        <p>content</p>
+    </template>
+
+    <!-- v-else-if -->
+    <p v-if="type === 'a'">a</p>
+    <p v-else-if="type === 'b'">b</p>
+    <p v-else-if="type === 'c'">c</p>
+    <p v-else>Not a b c.</p>
+
+    <!-- 用key管理可复用的元素 -->
+    <template v-if="loginType == 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username">
+    </template>
+    <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address">
+    </template>
+    <input type="button" @click="loginType = loginType.length > 0 ? '' : 'username'" value="Toggle login type">
+
+
+    <br>
+    <template v-if="keyType == 'userkey'">
+        <label>Username</label>
+        <input placeholder="Enter your userkey" key="userinput">
+    </template>
+    <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address" key="emailrinput">
+    </template>
+    <input type="button" @click="keyType = keyType.length > 0 ? '' : 'userkey'" value="Toggle login type">
+</div>
+<script>
+    // 模板内的表达式只用于简单计算, 复杂逻辑应当使用计算属性
+    var app = new Vue({
+        el: '#app',
+        data: {
+            seen: true,
+            ok: true,
+            type: 'd',
+            loginType: 'username',
+            keyType: 'userkey'
+        }
+    });
+</script>
+</body>
+</html>
