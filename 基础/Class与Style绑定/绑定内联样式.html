@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 对象语法 -->
+    <div :style="{color: fontColor, fontSize: fontSize + 'px'}">This is a div.</div>
+    <div :style="styleObject">Bind style object.</div>
+
+    <!-- 数组语法 -->
+    <p :style="[activeStyle, {border: borderStyle}]">This is a div.</p>
+
+    <!-- 自动添加前缀 -->
+    <div v-bind:style="{transform: trans, border: borderStyle}">transform</div>
+
+</div>
+<script>
+    // 模板内的表达式只用于简单计算, 复杂逻辑应当使用计算属性
+    var app = new Vue({
+        el: '#app',
+        data: {
+            fontColor: '#42b983',
+            fontSize: 18,
+            styleObject: {
+                fontSize:  '18px'
+            },
+            activeStyle: {
+                fontSize: '12px'
+            },
+            borderStyle: '1px solid red',
+            trans: 'scale(2)'
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<style>
+    .active{
+        background-color: #42b983;
+    }
+    .border {
+        border: 1px solid #18b91b;
+    }
+</style>
+<div id="app">
+    <!-- 对象语法 -->
+    <div :class="{active: isActive, border: hasBorder}">
+        This is a div.
+    </div>
+    <p :class="classObject">Bind a oject.</p>
+    <p :class="computedClass">Computed class.</p>
+
+    <!-- 数组语法 -->
+    <p :class="[activeClass, borderClass]">This is a div.</p>
+    <p :class="[activeClass, hasBorder ? borderClass : '']">This is a div.</p>
+    <p :class="[{active: isActive}, hasBorder ? borderClass : '']">This is a div.</p>
+
+    <!-- 用在组件上 -->
+    <com class="test" v-bind:class="{active: isActive}"></com>
+
+</div>
+<script>
+
+    Vue.component('com', {
+        template: '<p class="border">Hi</p>'
+    });
+
+    // 模板内的表达式只用于简单计算, 复杂逻辑应当使用计算属性
+    var app = new Vue({
+        el: '#app',
+        data: {
+            isActive: true,
+            hasBorder: false,
+            classObject: {
+                active: false,
+                border: true
+            },
+            activeClass: 'active',
+            borderClass: 'border'
+        },
+        computed: {
+            computedClass: function () {
+                return {
+                    border: !this.isActive
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
