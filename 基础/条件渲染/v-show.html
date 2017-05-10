@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- v-show -->
+    <p v-show="show">v-show.</p>
+</div>
+<script>
+    // v-show只是css样式的切换,该元素总是会被渲染, 并且不支持template, 有初始的渲染开销
+    // v-if是惰性的, 它是根据条件才渲染的, 有比较高的切换开销
+    var app = new Vue({
+        el: '#app',
+        data: {
+            show: true
+        }
+    });
+</script>
+</body>
+</html>
