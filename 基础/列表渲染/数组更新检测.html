@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 数据更新检测 -->
+    <!-- 数组的变异方法会更新数组(push, pop, shift, unshift, reverse, sort, splice) -->
+    <ul>
+        <li v-for="item in items" :key="item.id">
+            {{item.message}}
+        </li>
+    </ul>
+
+    <!-- 重塑数组: 数组的非变异方法不会更新数组(filter, concat, slice), 为了触发更新, 可以使用新数组替换旧数组 -->
+    <!-- 如执行  app.app.items = app.items.slice(1), vue实现了一些智能启发式方法来最大化 DOM 元素重用, 所以不必担心性能的问题 -->
+    <ul>
+        <li v-for="item in items" :key="item.id">
+            {{item.message}}
+        </li>
+    </ul>
+
+    <!-- 注意事项: 由于js的限制, vue也检测不到以下的变动: app.items[1] = 'sone value',  items.length = 1 -->
+    <!-- 问题1: 可以使用Vue.set(app.items, indexOfItem, newVue) 或 items.splice(indexOfItem, 1, newValue)-->
+    <!-- 问题2: app.items.splice(newLength)-->
+    <ul>
+        <li v-for="item in items" :key="item.id">
+            {{item.message}}
+        </li>
+    </ul>
+
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            items: [
+                {
+                    message: 'Foo'
+                },
+                {
+                    message: 'Bar'
+                },
+            ]
+        }
+    });
+</script>
+</body>
+</html>

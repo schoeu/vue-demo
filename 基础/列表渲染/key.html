@@ -7,22 +7,28 @@
 </head>
 <body>
 <div id="app">
-    <!-- v-for -->
+    <!-- key -->
+    <!-- todo -->
     <ul>
-        <li v-for="item in items">
+        <li v-for="item in items" :key="item.id">
             {{item.message}}
         </li>
     </ul>
 
 </div>
 <script>
-    // 可以用带有 v-for 的 <template> 标签来渲染多个元素块
     var app = new Vue({
         el: '#app',
         data: {
             items: [
-                {message: 'Foo'},
-                {message: 'Bar'}
+                {
+                    message: 'Foo',
+                    id: '1'
+                },
+                {
+                    message: 'Bar',
+                    id: '2'
+                },
             ]
         }
     });
