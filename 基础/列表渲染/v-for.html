@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- v-for -->
+    <ul>
+        <li v-for="item in items">
+            {{item.message}}
+        </li>
+    </ul>
+
+    <!-- v-for父作用域完全的访问权限 -->
+    <ul>
+        <li v-for="(item, index) in items">
+            {{parentMessage}} - {{index}} - {{item.message}}
+        </li>
+    </ul>
+
+
+    <!-- v-of -->
+    <ul>
+        <li v-for="(item, index) of items">
+            {{parentMessage}} - {{index}} - {{item.message}}
+        </li>
+    </ul>
+
+    <!-- template v-of -->
+    <template v-for="(item, index) in items">
+        <p>{{item}}</p>
+        <h5>{{index}}</h5>
+    </template>
+
+    <!-- 对象迭代 v-for 在遍历对象时，是按 Object.keys() 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的-->
+    <ul>
+        <li v-for="(value, key, index) of object">
+            {{key}}-{{value}}-{{index}}
+        </li>
+    </ul>
+
+    <!-- 整数迭代 v-for 一般用于重复多次模板-->
+    <div>
+        <span v-for="n in 10">
+            {{n}}
+        </span>
+    </div>
+
+    <!-- 组件和v-for -->
+    <!-- 不自动注入 item 到组件里的原因是，因为这使得组件会紧密耦合到 v-for 如何运作。在一些情况下，明确数据的来源可以使组件可重用。 -->
+    <my-component v-for="(item, index) in items" :item="item" :index="index"></my-component>
+
+    <!-- v-for with v-if -->
+    <ul>
+        <!-- 当它们处于同一节点， v-for 的优先级比 v-if 更高, 这样每一个if将分别重复与每个循环中 -->
+        <li v-for="item in items" v-if="item.isComplete">{{item}}</li>
+    </ul>
+    <!-- 如果是有选择性的进行循环则将 v-if 置于包装元素 (或 <template>)上 -->
+    <ul v-if="parentMessage.length > 2">
+        <li v-for="item in items">{{item}}</li>
+    </ul>
+
+</div>
+<script>
+    // 用 v-for 指令根据一组数组的选项列表进行渲染。 v-for 指令需要以 item in items 形式的特殊语法， items 是源数据数组并且 item 是数组元素迭代的别名。
+    var app = new Vue({
+        el: '#app',
+        data: {
+            parentMessage: 'Parent',
+            items: [
+                {message: 'Foo', isComplete: true},
+                {message: 'Bar', isComplete: false}
+            ],
+            object: {
+                FirstName: 'John',
+                LastName: 'Doe',
+                Age: 30
+            }
+        },
+        components: {
+            'my-component': {
+                template: '<div>component-{{index}}-{{item}}</div>',
+                props: ['index', 'item']
+            }
+        }
+    });
+</script>
+</body>
+</html>
