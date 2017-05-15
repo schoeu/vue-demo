@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 事件修饰符 -->
+    <!--  Vue.js 为 v-on 提供了 事件修饰符。通过由点(.)表示的指令后缀来调用修饰符, 暂时支持5种 (.stop, .prevent, .capture, .self, .once) -->
+    <!-- 阻止单击事件冒泡 -->
+    <a v-on:click.stop="doThis"></a>
+    <!-- 提交事件不再重载页面 -->
+    <form v-on:submit.prevent="doThis"></form>
+    <!-- 修饰符可以串联  -->
+    <a v-on:click.stop.prevent="doThis"></a>
+    <!-- 只有修饰符 -->
+    <form v-on:submit.prevent></form>
+    <!-- 添加事件侦听器时使用事件捕获模式 -->
+    <div v-on:click.capture="doThis">...</div>
+    <!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+    <div v-on:click.self="doThis">...</div>
+
+
+
+
+    <!-- 按键修饰符 -->
+    <!-- 在监听键盘事件时，我们经常需要监测常见的键值。 Vue 允许为 v-on 在监听键盘事件时添加按键修饰符 -->
+    <!-- 现支持 .enter, .tab, .delete, .esc, .space, .up, .down, .left, .right -->
+    <!-- 可以通过全局 Vue.config.keyCodes对象自定义按键修饰符别名 -->
+    <input v-on:keyup.13="doThis">
+
+    <!-- 可以用如下修饰符开启鼠标或键盘事件监听，使在按键按下时发生响应 -->
+    <!-- .ctrl, .alt, .shift, .meta -->
+    <input @keyup.alt.67="doThis">
+    <div @click.ctrl="doThis">doThis</div>
+
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            name: 'Vue.js'
+        },
+        methods: {
+            doThis: function () {
+                // this在当前方法中指当前Vue实例
+                alert('Hello' + this.name + '!');
+            }
+        }
+    });
+</script>
+</body>
+</html>
