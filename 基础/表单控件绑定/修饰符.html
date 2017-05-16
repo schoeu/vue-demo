@@ -8,24 +8,55 @@
 <body>
 <div id="app">
     <!-- 在change而不是input事件中触发 -->
-    <input v-model.lazy="msg">
-    <p>{{msg}}</p>
+    <child message="hello!"></child>
 
-    <!-- 自动将用户输入值转成number -->
-    <input v-model.number="age" type="number">
-    <p>{{age}}</p>
+    <!-- HTML特性是不区分大小写的, 当不是使用的字符串模板时,camelCased (驼峰式) 命名的 prop 需要转换为相对应的 kebab-case (短横线隔开式) 命名 -->
+    <child my-message="vue"></child>
 
-    <!-- 自动过滤用户输入的首尾空格 -->
-    <input v-model.trim="msg">
-    <p>{{msg}}</p>
+    <!-- 动态Prop -->
+    <div>
+        <input v-model="parentMsg">
+        <child :my-message="parentMsg"></child>
+    </div>
+
+    <!-- 单项数据流: 当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改了父组件的状态 -->
+
+    <!-- Prop验证 -->
+    <!-- 当传入的数据不符合规范, Vue会发出警告, 要验证规格,要用对象的形式,而不是字符串数组 -->
+    <div>
+        <example :msg="1" multi-type="s" default-num="num" test="11"></example>
+    </div>
 
 </div>
 <script>
+
+    Vue.component('child', {
+        template: '<span>{{message}}{{myMessage}}</span>',
+        props: ['message', 'myMessage']
+    });
+
+    Vue.component('example', {
+        template: '<span>{{msg}}{{multiType}}{{defaultNum}}{{test}}</span>',
+        props: {
+            msg: Number,
+            multiType: [String, Number],
+            defaultNum: {
+                type: String,
+                required: true
+            },
+            test: {
+                validator: function (value) {
+                    return value > 10
+                }
+            },
+            num: Number
+        }
+    });
+
     var app = new Vue({
         el: '#app',
         data: {
-            msg: '',
-            age: 0
+            parentMsg: 'parent message'
         }
     });
 </script>
