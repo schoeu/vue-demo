@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 在change而不是input事件中触发 -->
+    <input v-model.lazy="msg">
+    <p>{{msg}}</p>
+
+    <!-- 自动将用户输入值转成number -->
+    <input v-model.number="age" type="number">
+    <p>{{age}}</p>
+
+    <!-- 自动过滤用户输入的首尾空格 -->
+    <input v-model.trim="msg">
+    <p>{{msg}}</p>
+
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg: '',
+            age: 0
+        }
+    });
+</script>
+</body>
+</html>
