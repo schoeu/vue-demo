@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 自定义事件, 主要用于子组件向父组件传递数据 -->
+    <my-component></my-component>
+
+</div>
+<script>
+
+    Vue.component('my-component', {
+        template: '<div>A costom component!</div>'
+    });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg: '',
+            age: 0
+        },
+        components: {
+            'child-component': Child,
+            'data-test': {
+                template: '<button @click="counter += 1">{{counter}}</button>',
+                data: function () {
+                    // 返回同一数据对象引用会影响所有数据实例
+                    // return tmpData;
+
+                    // 返回独立数据则各组件data都是独立的
+                    return {
+                        counter: 0
+                    }
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
