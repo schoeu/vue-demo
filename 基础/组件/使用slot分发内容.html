@@ -23,6 +23,18 @@
         <div slot="header"> 头部slot内容 </div>
     </app-name>
 
+
+    <!-- 作用域插槽一般用作使用一个（能够传递数据到）可重用模板替换已渲染元素 -->
+    <!-- 在父级中，具有特殊属性 scope 的 <template> 元素，表示它是作用域插槽的模板。scope 的值对应一个临时变量名，此变量接收从子组件中传递的 prop 对象 -->
+    <div class="parent">
+        <child>
+            <template scope="props">
+                <span>hello from parent</span>
+                <span>{{ props.text }}</span>
+            </template>
+        </child>
+    </div>
+
 </div>
 <script>
     new Vue({
@@ -51,6 +63,12 @@
                         text: 'app name content.'
                     };
                 }
+            },
+            'child': {
+                // 在子组件中，只需将数据传递到插槽，就像你将 prop 传递给组件一样
+                template: `<div class="child">
+                                <slot text="hello from child"></slot>
+                           </div>`
             }
         },
         data: function () {
