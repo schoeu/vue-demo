@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 自定义事件, 主要用于子组件向父组件传递数据 -->
+    <!-- 父组件可以在使用子组件的地方使用v-on来监听子组件触发的事件 -->
+    {{count}}
+    <my-component @increment="total"></my-component>
+    <my-component @increment="total"></my-component>
+
+</div>
+<script>
+    /**
+     * 在简单的场景下,可以直接使用vue的事件总线来进行非父子组件的通信, 复杂场景还是请使用vuex
+     * */
+    var bus = new Vue();
+
+    bus.$on('sone-event', function (data) {
+        console.log('bus data: ' + data);
+    });
+    bus.$emit('sone-event', 'some data');
+</script>
+</body>
+</html>

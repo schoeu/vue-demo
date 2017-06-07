@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE DEMO</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 在我们使用组件的时候,我们并不知道组件内的内容会被调用者放什么内容,所以我们可以采用slot标签来给组件让组件内的内容来填充, 如果开发者对组件中有填充内容,但子组件中没有给它用slot留插槽,这填充内容就被丢弃掉 -->
+    <!-- 如果子组件中有多个插槽(slot), vue则会把填充的内容放在这多个插槽里-->
+    <app>
+        <!-- 编译作用域: 父组件模板的内容在父组件作用域编译,子组件模板的内容在子组件作用域编译 -->
+        <!-- {{childTestProp}}是子组件的属性, 这里直接写,它是不会生效的, 因为这里并不是子组件编译的作用域,所以不生效  -->
+        <!-- {{testProp}}是父组件的属性, 这里直接写,它是生效的  -->
+        {{testProp}}
+        这里的内容是组件调用者来写的,如果我们需要这里的内容,则需要在组件内用一个slot标签来给它占位,渲染后,这里的内容就会被填充到刚才slot占位的地方。
+    </app>
+
+
+    <!-- 具名slot,可以指定到填充到那个插槽中, 没有找到指定的插槽则内容调起 -->
+    <app-name>
+        <div slot="header"> 头部slot内容 </div>
+    </app-name>
+
+
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        components: {
+            'app': {
+                template: `<div>
+                                <span>{{text}}</span>
+                                <p>
+                                    <slot>这里是备用信息, 如果内容填充内容的话,或显示这个备用内容, 备用内容可以为空</slot>
+                                </p>
+                            </div>`,
+                data: function () {
+                    return {
+                        text: 'compontents content.',
+                        childTestProp: 'childTestProp'
+                    };
+                }
+            },
+            'app-name': {
+                template: `<div>
+                                <slot name="header"></slot>
+                            </div>`,
+                data: function () {
+                    return {
+                        text: 'app name content.'
+                    };
+                }
+            }
+        },
+        data: function () {
+            return {
+                testProp: 'testProp'
+            };
+        }
+    });
+</script>
+</body>
+</html>
